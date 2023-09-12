@@ -15,6 +15,7 @@ export function Card({
   removeFav,
 }) {
   const [isFav, setIsFav] = useState(false);
+  const [closeBtn, setCloseBtn] = useState(true);
 
   const handleFavorite = () => {
     if (isFav) {
@@ -34,10 +35,25 @@ export function Card({
     });
   }, [myFavorites, id]);
 
+  useEffect(() => {
+    if (!onClose) {
+      setCloseBtn(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
       <button onClick={handleFavorite}>{isFav ? "❤️" : "🤍"}</button>
-      <button onClick={() => onClose(id)}>X</button>{" "}
+      {closeBtn && (
+        <button
+          onClick={() => {
+            onClose(id);
+          }}
+        >
+          X
+        </button>
+      )}
       {/* card recibe el id de function onClose , el id es el numero que ingresa el usuarios a traves del input  */}
       <NavLink to={`/detail/${id}`}>
         <h2 className="card-name">{name}</h2>

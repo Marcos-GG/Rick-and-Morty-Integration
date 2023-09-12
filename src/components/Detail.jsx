@@ -7,15 +7,15 @@ const Detail = () => {
   const [character, setCharacter] = useState({});
 
   useEffect(() => {
-    axios(
-      `http://rym2-production.up.railway.app/api/character/${id}?key=henrym-marcos-gg`
-    ).then(({ data }) => {
-      if (data.name) {
-        setCharacter(data);
-      } else {
-        window.alert("No hay personajes con ese ID");
+    axios(`http://localhost:3001/rickandmorty/character/${id}`).then(
+      ({ data }) => {
+        if (data.name) {
+          setCharacter(data);
+        } else {
+          alert("No hay personajes con ese ID");
+        }
       }
-    });
+    );
     return setCharacter({});
   }, [id]);
 

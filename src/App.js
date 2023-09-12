@@ -9,9 +9,6 @@ import Detail from "./components/Detail.jsx";
 import Form from "./components/Form.jsx";
 import Favorites from "./components/Favorites.jsx";
 
-const EMAIL = "marcos@gmail.com";
-const PASSWORD = "marcos123";
-
 function App() {
   const navigate = useNavigate();
   const [access, setAccess] = useState(false); // la inicializamos con false
@@ -27,16 +24,18 @@ function App() {
   //    // console.log(characters);
   // }
 
-  const onSearch = (id) => {
-    axios(
-      `http://rym2-production.up.railway.app/api/character/${id}?key=henrym-marcos-gg`
-    ).then(({ data }) => {
+  const onSearch = async (id) => {
+    try {
+      const { data } = await axios(
+        `http://localhost:3001/rickandmorty/character/${id}`
+      );
+
       if (data.name) {
         setCharacters((oldChars) => [...oldChars, data]);
-      } else {
-        alert("¡No hay personajes con este ID!");
       }
-    });
+    } catch (error) {
+      alert("No hay personajes con este");
+    }
   };
 
   const onClose = (id) => {
@@ -46,10 +45,18 @@ function App() {
     setCharacters(characterFiltered);
   };
 
-  const login = (userData) => {
-    if (userData.email === EMAIL && userData.password === PASSWORD) {
-      setAccess(true);
-      navigate("/home");
+  const login = async (userData) => {
+    try {
+      const { email, password } = userData;
+      const URL = "http://localhost:3001/rickandmorty/login/";
+      const { data } = await axios(
+        URL + `?email=${email}&password=${password}`
+      );
+      const { access } = data;
+      setAccess(access);
+      access && navigate("/home");
+    } catch (error) {
+      alert(error.message);
     }
   };
 
