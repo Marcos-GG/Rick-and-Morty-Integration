@@ -1,70 +1,250 @@
-# Getting Started with Create React App
+# **💪 HW3 | Sequelize Part 1 - Integration**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## **🕒 DURACIÓN ESTIMADA**
 
-## Available Scripts
+XX minutos
 
-In the project directory, you can run:
+<br />
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<div align="center">
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## **💻 RICK AND MORTY APP 💻**
 
-### `npm test`
+</div>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## **📝 INTRODUCCIÓN**
 
-### `npm run build`
+En esta homework pondremos en práctica todo lo que hemos aprendido hasta ahora sobre Sequelize. Aplicaremos nuestros conocimientos para conectar nuestro código con una nueva base de datos para nuestro proyecto de Rick & Morty.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+</br >
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## **📋 INSTRUCCIONES**
 
-### `npm run eject`
+### **👩‍💻 EJERCICIO 01 | Dependencias & Config**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Lo primero que deberás hacer es instalar las siguientes dependencias en tu **`package.json`**:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+-  **sequelize**
+-  **pg**
+-  **dotenv**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Una vez las hayas instalado tendrás que crear la base de datos en PostgreSQL. Para crear la base de datos puedes optar por utilizar directamente **`pgAdmin`**. En el caso de que quieras hacerlo por terminal sigue estos pasos:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+> ⚠️ [**IMPORTANTE**]: es muy importante que el nombre de la base de datos sea: **`rickandmorty`**. En el caso de no cumplir esto la homework puede fallar.
 
-## Learn More
+1. Abre la terminal **`SQL Shell (psql)`** e ingresa tu información personal.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. Crea una base de datos con el nombre **`rickandmorty`** utilizando el comando que ya conoces.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   Puedes verificar que se haya creado correctamente con el comando:
 
-### Code Splitting
+   ```SQL
+      \l
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+<br />
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### **👩‍💻 EJERCICIO 02 | ENV**
 
-### Making a Progressive Web App
+Dirígete a la raíz de tu proyecto Back-End. Allí deberás crea un archivo llamado **`.env`**. En su interior debes escribir lo siguiente:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```js
+DB_USER=postgres
+DB_PASSWORD= ---> // ¡Aquí va tu contraseña!
+DB_HOST=localhost
+```
 
-### Advanced Configuration
+<br />
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+### **👩‍💻 EJERCICIO 03 | DB Connection**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Ya tenemos todo lo necesario para comenzar a trabajar. Comenzaremos por conectar el código con nuestra base de datos. Para esto:
 
-### `npm run build` fails to minify
+1. Lleva el archivo [**DB_connection**](./DB_connection.js) a tu carpeta **src**.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+2. Dentro de él encontrás el siguiente paso a seguir.
+
+> [**NOTA**]: revisa el código comentado en la sección **`Ejercicio 03`**.
+
+<br />
+
+---
+
+### **👩‍💻 EJERCICIO 04 | Models**
+
+Llegó el momento de crear nuestros modelos. LLeva la carptea [**models**]("./models) a tu carpeta **src**. Dentro de esta carpeta encontrarás dos archivos: **`User`** y **`Favorite`**. Tendrás que agregar las propiedades y validaciones correspondiente en cada uno de los modelos.
+
+A continuación te dejamos las propiedades de cada modelo junto con sus validaciones.
+
+<div style="display: flex; position: relative; height: 45vh; overflow: hidden;">
+
+<div style="position: absolute; top: 3vh; left: 15vw;">
+
+### **USER**
+
+<details>
+   <summary>id</summary>
+   <ul>
+      <li>dataType: integer</li>
+      <li>allowNull: false</li>
+      <li>primaryKey: true</li>
+   </ul>
+</details>
+<details>
+   <summary>email</summary>
+   <ul>
+      <li>dataType: string</li>
+      <li>allowNull: false</li>
+      <li>isEmail: true</li>
+   </ul>
+</details>
+<details>
+   <summary>password</summary>
+   <ul>
+      <li>dataType: string</li>
+      <li>allowNull: false</li>
+   </ul>
+</details>
+
+</div>
+
+<div style="position: absolute; top: 3vh; right: 15vw; width: 20vw;">
+
+### **FAVORITE**
+
+<details>
+   <summary>id</summary>
+   <ul>
+      <li>dataType: integer</li>
+      <li>allowNull: false</li>
+      <li>primaryKey: true</li>
+   </ul>
+</details>
+<details>
+   <summary>name</summary>
+   <ul>
+      <li>dataType: string</li>
+      <li>allowNull: false</li>
+   </ul>
+</details>
+<details>
+   <summary>status</summary>
+   <ul>
+      <li>dataType: Enum (Alive - Dead - unknown)</li>
+      <li>allowNull: false</li>
+   </ul>
+</details>
+<details>
+   <summary>species</summary>
+   <ul>
+      <li>dataType: string</li>
+      <li>allowNull: false</li>
+   </ul>
+</details>
+<details>
+   <summary>gender</summary>
+   <ul>
+      <li>dataType: Enum (Female - Male - Genderless - unknown)</li>
+      <li>allowNull: false</li>
+   </ul>
+</details>
+<details>
+   <summary>origin</summary>
+   <ul>
+      <li>dataType: string</li>
+      <li>allowNull: false</li>
+   </ul>
+</details>
+<details>
+   <summary>image</summary>
+   <ul>
+      <li>dataType: string</li>
+      <li>allowNull: false</li>
+   </ul>
+</details>
+
+</div>
+
+</div>
+
+<br />
+
+---
+
+### **👩‍💻 EJERCICIO 05 | Instanciar Modelos**
+
+Ya tenemos nuestra conexión a la base de datos y nuestros modelos creados. Lo único que nos queda por hacer es que cada vez que levantemos el proyecto, estos modelos se guarden en la base de datos. Para esto:
+
+1. Dirígete al archivo **`DB_connection`**. En este archivo importa los dos modelos que creaste previamente. Asegúrate de importalos con el nombre **"`FavoriteModel`"** y **"`UserModel`"**.
+
+2. Luego de importarlos tendrás que ejecutar cada uno, pasándoles como argumento la instancia de sequelize que se encuentra más arriba.
+
+Por ejemplo, si tuvieras un modelo llamado **Henry** deberías hacer lo siguiente:
+
+```js
+HenryModel(sequelize);
+```
+
+> [**NOTA**]: 👀 revisa que en el archivo hay un espacio comentado para que realices este ejercicio.
+
+<br />
+
+---
+
+### **👩‍💻 EJERCICIO 06 | RELATIONS**
+
+Ahora tendrás que relacionar tus modelos. Si nos ponemos a pensar, un usuario puede tener muchos personajes favoritos. Y un personaje puede ser el favorito de muchos usuarios. ¡Esto quiere decir que la relación debe ser de muchos a muchos!
+
+1. Dirígete al archivo **`DB_connection`** y relaciona tus modelos. La tabla intermedia debe llamarse **`user_favorite`**.
+
+2. Una vez los hayas relacionado, exporta cada modelo de forma individual.
+
+> [**NOTA**]: 👀 revisa que en el archivo hay un espacio comentado para que realices este ejercicio.
+
+3. Para terminar dirígete a tu archivo **`index.js`** e importa la varaible **`conn`** de tu archivo **`DB_connection`**. Una vez la hayas importado, ¡sincroniza sequelize con tu base de datos antes que se levante el servidor!
+
+   ```js
+   const { conn } = require('./DB_connection');
+   ```
+
+<br />
+
+---
+
+<div style="background-color: #343434; padding: 2vw;">
+
+## **😼 BREAK 😼**
+
+En este momento ya deberíamos de poder levantar el proyecto y que todo esté funcionando correctamente. Para esto ejecuta el comando:
+
+```bash
+   npm start
+```
+
+<div align="center" >
+   <img src="./assets/workInProgress.png" alt="" />
+</div>
+
+</div>
+
+<br />
+
+---
+
+## **🔎 Recursos adicionales**
+
+-  Documentación [**API Rick and Morty**](https://rickandmortyapi.com/documentation/#get-all-characters)
+
+-  Documentación [**Sequelize**](https://sequelize.org/docs/v6/)
+
+<div align="center">
+   <img src="./assets/rickandmorty.jpg" alt="" width="800px" />
+</div>
